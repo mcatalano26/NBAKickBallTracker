@@ -5,7 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "gitpython>=3.1.45",
     "nba-api>=1.10.0",
+    "numpy>=2.3.2",
+    "pandas>=2.3.1",
+    "sqlalchemy>=2.0.42",
 ]
 
 [dependency-groups]

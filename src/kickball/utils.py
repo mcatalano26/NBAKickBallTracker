@@ -1,6 +1,14 @@
 
+import os
+
+import git
 from nba_api.stats.static import players, teams  # type: ignore
 
+
+def get_git_root() -> str:
+    git_repo = git.Repo(os.getcwd(), search_parent_directories=True)
+    git_root = git_repo.git.rev_parse("--show-toplevel")
+    return git_root
 
 def get_active_player_dict() -> dict[int, str]:
     """
@@ -16,9 +24,9 @@ def get_active_team_lst() -> list[str]:
         list[str]: list of active team nicknames
     """
     nba_teams = teams.get_teams()
-    return [team["nickname"] for team in nba_teams]
+    return [team["abbreviation"] for team in nba_teams]
 
-def get_team_id(name: str) -> int:
+def get_team_id_from_abbr(abbr: str) -> int:
     """
     Args:
         name (str): Team name (i.e. "Lakers")
@@ -28,8 +36,9 @@ def get_team_id(name: str) -> int:
     """
     nba_teams = teams.get_teams()
     for team in nba_teams:
-        if team["nickname"] == name:
-            return team["id"]
+        if team["abbreviation"] in get_active_team_lst():
+            if team["abbreviation"] == abbr:
+                return team["id"]
     return 0
 
 
