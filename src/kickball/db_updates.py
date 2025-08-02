@@ -1,4 +1,6 @@
 
+import sqlite3
+
 import numpy as np
 import pandas as pd  # type: ignore
 from nba_api.stats.endpoints import leaguegamefinder  # type: ignore
@@ -11,8 +13,17 @@ from .utils import get_active_team_lst, get_git_root, get_team_id_from_abbr
 
 def df_to_db(df: pd.DataFrame, db_name: str, if_exists_method: str) -> None:
     db = create_engine(f"sqlite:////{get_git_root()}/data/{db_name}.db")
-    df.to_sql(f"{db_name}", db, if_exists=if_exists_method, index=False)
-    print(f"{db_name} database updated successfully.")
+    
+    if if_exists_method == "replace":
+        df.to_sql(f"{db_name}", db, if_exists=if_exists_method, index=False)
+    else:
+        with sqlite3.connect(f"{get_git_root()}/data/{db_name}.db") as conn:
+            cursor = conn.cursor()
+            for _, row in df.iterrows():
+                columns = ", ".join(row.index)
+                placeholders = ", ".join(["?"] * len(row))
+                sql = f"INSERT OR IGNORE INTO {db_name} ({columns}) VALUES ({placeholders})"
+                cursor.execute(sql, tuple(row.values))
     
 
 def replace_players_db() -> None:
@@ -23,11 +34,15 @@ def replace_players_db() -> None:
     nba_players_df = nba_players_df[["id", "first_name", "last_name", "is_active"]]
     
     df_to_db(nba_players_df, "players", "replace")
+    
+    print("players database updated successfully.")
 
 def replace_teams_db(games_df: pd.DataFrame) -> None:
     teams_df = games_df[["TEAM_ID", "TEAM_ABBREVIATION", "TEAM_NAME"]].drop_duplicates().reset_index(drop=True)
 
     df_to_db(teams_df, "teams", "replace")
+    
+    print("teams database updated successfully.")
 
 def replace_games_db(games_df: pd.DataFrame) -> None:
     games_df = games_df[["GAME_ID", "MATCHUP", "GAME_DATE"]]
@@ -51,6 +66,8 @@ def replace_games_db(games_df: pd.DataFrame) -> None:
     games_df = games_df.drop(columns=["MATCHUP"])
     
     df_to_db(games_df, "games", "replace")
+    
+    print("games database updated successfully.")
     
     
 def replace_season_dbs() -> None:
