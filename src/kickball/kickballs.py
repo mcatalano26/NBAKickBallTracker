@@ -35,7 +35,7 @@ def update_kickball_db(start_date: date, end_date: date) -> None:
     total_games = len(game_ids)
     kick_df = pd.DataFrame()
     for idx, game_id in enumerate(game_ids, 1):
-        sleep(1)  # To avoid hitting API rate limits
+        sleep(3)  # To avoid hitting API rate limits
         df = playbyplayv3.PlayByPlayV3(game_id).get_data_frames()[0]
         
         game_df = df[df["description"].str.lower().str.contains("kick").reset_index(drop=True)]

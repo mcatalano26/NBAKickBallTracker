@@ -30,7 +30,7 @@ def update_minutes_db(start_date: date, end_date: date) -> None:
     total_games = len(game_ids)
     minutes_df = pd.DataFrame()
     for idx, game_id in enumerate(game_ids, 1):
-        sleep(1)  # To avoid hitting API rate limits
+        sleep(3)  # To avoid hitting API rate limits
         df = boxscoreplayertrackv3.BoxScorePlayerTrackV3(game_id)
         
         game_df = df.player_stats.get_data_frame()
