@@ -1,5 +1,7 @@
 
 import os
+import sqlite3
+from datetime import date
 
 import git
 from nba_api.stats.static import players, teams  # type: ignore
@@ -55,3 +57,21 @@ def get_player_id(name: str) -> int:
         if player["full_name"] == name:
             return player["id"]
     return 0
+
+def get_games_for_date_range(start_date: date, end_date: date) -> list[str]:
+    conn = sqlite3.connect(f"{get_git_root()}/data/games.db")
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT game_id FROM games WHERE game_date >= ? AND game_date <= ?",
+        (start_date.isoformat(), end_date.isoformat())
+    )
+    game_ids = [row[0] for row in cursor.fetchall()]
+    conn.close()
+    return game_ids
+
+def display_progress_bar(idx: int, total: int, name: str) -> None:
+    percent = int((idx / total) * 100)
+    bar = ('#' * (percent // 2)).ljust(50)
+    print(f"\r{name} Progress: |{bar}| {percent}% ({idx}/{total})", end='', flush=True)
+    if idx == total:
+        print()

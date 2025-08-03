@@ -16,7 +16,7 @@ def df_to_db(df: pd.DataFrame, db_name: str, if_exists_method: str) -> None:
     
     if if_exists_method == "replace":
         df.to_sql(f"{db_name}", db, if_exists=if_exists_method, index=False)
-    else:
+    elif if_exists_method == "append":
         with sqlite3.connect(f"{get_git_root()}/data/{db_name}.db") as conn:
             cursor = conn.cursor()
             for _, row in df.iterrows():
@@ -24,6 +24,8 @@ def df_to_db(df: pd.DataFrame, db_name: str, if_exists_method: str) -> None:
                 placeholders = ", ".join(["?"] * len(row))
                 sql = f"INSERT OR IGNORE INTO {db_name} ({columns}) VALUES ({placeholders})"
                 cursor.execute(sql, tuple(row.values))
+    else:
+        raise ValueError("if_exists_method must be either 'replace' or 'append'")
     
 
 def replace_players_db() -> None:
