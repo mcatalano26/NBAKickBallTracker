@@ -13,6 +13,8 @@ from .player_info import update_minutes_db
 
 def get_dates():
     
+    return (date(2025, 4, 1), date(2025, 4, 1), date(2025, 4, 1), "April")
+    
     # This will be run on the first of every month
     yesterday = datetime.now() - timedelta(days=1)
     last_month_name = yesterday.strftime("%B")
