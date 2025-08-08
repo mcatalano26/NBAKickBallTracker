@@ -27,6 +27,8 @@ jobs:
       - name: Run main function
         run: uv run -m kickball.main
         working-directory: src
+        env:
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
 
       - name: Commit and push database changes
         run: |
