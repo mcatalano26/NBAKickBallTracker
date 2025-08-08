@@ -2,25 +2,25 @@ name: Monthly Kickball Leaderboard
 
 on:
   schedule:
-    - cron: '37 2 * * *'
+    - cron: '44 2 * * *'
     # - cron: '22 11 1 1,2,3,4,5,11,12 *'  # Runs at 11:22 UTC on the 1st of every month
 
 jobs:
   run-leaderboard:
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Set up Python from .python-version
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ steps.get-python-version.outputs.python-version }}
 
       - name: Read Python version from .python-version
         id: get-python-version
         run: |
           echo "python-version=$(cat .python-version)" >> $GITHUB_OUTPUT
+
+      - name: Set up Python from .python-version
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ steps.get-python-version.outputs.python-version }}
 
       - name: Install uv
         run: pip install uv
