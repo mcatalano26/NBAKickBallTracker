@@ -6,7 +6,7 @@ from typing import List
 from .data_analysis import Podium
 
 
-def send_email(season_podium: Podium, month_podium: Podium, month: str, season: str, sender_email: str, sender_password: str, recipient_emails: List[str]):
+def send_email(season_podium: Podium, month_podium: Podium, time_range: str, season: str, sender_email: str, sender_password: str, recipient_emails: List[str]):
     """
     Send a beautifully formatted email displaying the podium winners.
     
@@ -153,9 +153,9 @@ def send_email(season_podium: Podium, month_podium: Podium, month: str, season: 
         <div class="container">
             <div class="header">
                 <h1>Kickball Leaderboards</h1>
-                <p>{month} edition</p>
+                <p>{time_range} edition</p>
             </div>
-            <div class="section-title">🏅 {month} Standings 🏅</div>
+            <div class="section-title">🏅 {time_range} Standings 🏅</div>
             <div class="podium">
                 <!-- First Place -->
                 <div class="place">
