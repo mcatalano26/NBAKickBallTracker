@@ -58,9 +58,9 @@ def weekly_cron_job():
     last_week_name = f"{week_start_date.strftime('%b %d')} - {week_end_date.strftime('%b %d')}" 
     
     ### TEST ONLY ###
-    # week_start_date = date(2025, 4, 1)
-    # week_end_date = date(2025, 4, 1)
-    # SEASON_START_DATE = date(2025, 4, 1)
+    week_start_date = date(2025, 4, 1)
+    week_end_date = date(2025, 4, 1)
+    SEASON_START_DATE = date(2025, 4, 1)
     ### TEST ONLY ###    
     
     season_podium, week_podium = get_podiums(SEASON_START_DATE, week_start_date, week_end_date)
