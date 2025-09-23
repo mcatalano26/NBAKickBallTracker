@@ -75,6 +75,11 @@ def test():
 if __name__ == "__main__":
     if len(sys.argv) < 2:
         test()
+        
+    today = date.today()
+    if today < SEASON_START_DATE:
+        print(f"Season has not started yet. Season starts on {SEASON_START_DATE}. Exiting.")
+        exit(0)
 
     param = sys.argv[1]
 
