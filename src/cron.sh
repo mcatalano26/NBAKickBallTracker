@@ -1,3 +1,5 @@
+echo "Running on $(date)"
+
 cd "$(dirname "$0")"
 
 git checkout main
