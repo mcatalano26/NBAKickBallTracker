@@ -12,3 +12,4 @@ nba.com endpoints queried with `nba_api`
 Helpful for raspberry pi:
 `ping raspberrypi.local` to get ip
 `ssh mattcat26@<ip>` to get onto pi
+repo located at ~/repos/NBAKickBallTracker
