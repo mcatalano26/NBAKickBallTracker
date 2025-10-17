@@ -8,3 +8,7 @@ linting / formatting supported by `ruff`
 type-checking supported by `mypy`
 testing supported by `pytest`
 nba.com endpoints queried with `nba_api`
+
+Helpful for raspberry pi:
+`ping raspberrypi.local` to get ip
+`ssh mattcat26@<ip>` to get onto pi
