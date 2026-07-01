@@ -5,7 +5,8 @@ Run manually with `uv run -m kickball.main` from `src`
 
 Sample email:
 
-<img width="602" height="954" alt="image" src="https://github.com/user-attachments/assets/f9d695f7-edfd-4305-8349-1232cd5c4476" />
+<img width="878" height="1298" alt="image" src="https://github.com/user-attachments/assets/6107cb1c-f4d3-4c08-b7a3-285499148f60" />
+
 
 Subscribers will receive weekly + monthly kickball rankings!
 
